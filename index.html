@@ -28,11 +28,11 @@
         display: block;
         line-height: 50px;
       }
-      .alert-area {
+      .alert-area, .alert-areaDiv {
         margin-top: 10px;
         width: 250px;
       }
-      #answerStat {
+      #answerStat, #answerStatDiv {
         width: 250px; 
         display: block;
       }
@@ -47,17 +47,46 @@
   <body>
     <div class="col-md-4 col-md-offset-4 vertical-center">
       <div class="container">
-          <h4><span id="answerStat"></span></h4>
-          <form class="form-inline" id="inputForm">
-            <div class="form-group">
-              <div class="input-group">
-                <div class="input-group-addon"><span id="task"></span></div>
-                <input type="text" class="form-control" id="answer" autocomplete="off" placeholder="Ответ">
-              </div>
+        <div>
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Умножение</a></li>
+            <li role="presentation"><a href="#division" aria-controls="division" role="tab" data-toggle="tab">Деление</a></li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+              <!-- Tab 1 Multiplication -->
+              <h4><span id="answerStat"></span></h4>
+              <form class="form-inline" id="inputForm">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon"><span id="task"></span></div>
+                    <input type="text" class="form-control" id="answer" autocomplete="off" placeholder="Ответ">
+                  </div>
+                </div>
+              </form>
+              <div class="alert-area"></div>
             </div>
-          </form>
-          <div class="alert-area"></div>
+            <div role="tabpanel" class="tab-pane" id="division">
+              <!-- Tab 2 Division -->
+              <h4><span id="answerStatDiv"></span></h4>
+              <form class="form-inline" id="inputFormDiv">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon"><span id="taskDiv"></span></div>
+                    <input type="text" class="form-control" id="answerDiv" autocomplete="off" placeholder="Ответ">
+                  </div>
+                </div>
+              </form>
+              <div class="alert-areaDiv"></div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+
+    </div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -219,6 +248,162 @@
 
       var pyth = new Pyth();
       pyth.init(new Picker());
+    </script>
+    <script>
+      var PythDiv = function() {
+        var form;
+        var multiplier1, multiplier2;
+        var picker;
+        var alertCleanTimer;
+
+        var onFormSubmit = function() {
+          checkAnswer();
+          return false;
+        };
+        var nextTask = function() {
+          n = picker.nextNumbers();
+          giveTask(n[0], n[1]);
+        }
+        var giveTask = function(m1, m2) {
+            $('#taskDiv').html((m1*m2)+' &divide; '+m1+' =');
+            multiplier1 = m1;
+            multiplier2 = m2; 
+            $('#answerDiv').val('').focus();
+        };
+        var checkAnswer = function() {
+          var a = $('#answerDiv').val();
+          if (a == '') {
+            return;
+          }
+          a = parseInt(a);
+          if (isNaN(a)) {
+            return;
+          }
+          $('#answerDiv').blur();
+          $('#answerDiv').val('');
+          if (a == multiplier2) {
+            alertRight(multiplier1, multiplier2, a);
+            picker.logAnswer(multiplier1, multiplier2, true);
+          } else {
+            alertWrong(multiplier1, multiplier2, a);
+            picker.logAnswer(multiplier1, multiplier2, false);
+          }
+          nextTask();
+        };
+        var cleanAlerts = function() {
+            $('.alert-areaDiv').html('');
+            if (alertCleanTimer) {
+              clearTimeout(alertCleanTimer);
+              alertCleanTimer = null;
+            }
+        }
+        var alertRight = function(m1,m2,a) {
+          cleanAlerts();
+          $('.alert-areaDiv').append('<div class="alert alert-success"><strong>Верно!</strong> '+(m1*m2)+'&divide;'+m1+'='+m2+'</div>');
+          $('#answerStatDiv').append('<span class="right">&bull;<span>');
+          runAlertCleanTimer();
+        };
+        var alertWrong = function(m1,m2,a) {
+          cleanAlerts();
+          $('.alert-areaDiv').append('<div class="alert alert-danger"><strong>'+a+' это не верно!</strong> '+(m1*m2)+'&divide;'+m1+'='+m2+'</div>');
+          $('#answerStatDiv').append('<span class="wrong">&bull;<span>');
+          runAlertCleanTimer();
+        };
+        var runAlertCleanTimer = function() {
+          alertCleanTimer = setTimeout(cleanAlerts, 5000);
+        }
+
+        return {
+          'init': function(p) {
+            picker = p;
+            $('#inputFormDiv').submit(onFormSubmit);
+            nextTask();
+          }
+        };
+      };
+
+      var PickerDiv = function() {
+        var table = {};
+        var i,j;
+        var initialCell = {
+          rights: 0,
+          wrongs: 0,
+          rightsInRow: 0,
+          wrongsInRow: 0,
+          lastAnswerIsRight: null
+        };
+
+        for (i=1; i<=10; i++) {
+          table[i] = {};
+          for (j=1; j<=10; j++) {
+            table[i][j] = JSON.parse(JSON.stringify(initialCell));
+          }
+        }
+
+        var pickRandom = function() {
+            var m1 = 2 + Math.floor(Math.random() * 7);
+            var m2 = 2 + Math.floor(Math.random() * 7);
+            return [m1, m2];
+        };
+
+        var pickNumbersByCondition = function(condition) {
+            var n=0;
+            var row = [];
+
+            for (i=2; i<=9; i++) {
+              for (j=2; j<=9; j++) {
+                if (condition(table[i][j])) {
+                  row[n++] = [i,j];
+                }
+              }
+            }
+
+            if (row.length == 0) {
+              return pickRandom();
+            }
+
+            return row[Math.floor(Math.random() * n)];
+        };
+
+        var cond1 = function(cell) {
+          if (cell.rightsInRow >= 2) {
+            return false;
+          }
+
+          return true;
+        };
+
+        return {
+          'nextNumbers': function() {
+            return pickNumbersByCondition(cond1);
+          },
+          'logAnswer': function (m1, m2, isRight) {
+            if (isRight) {
+              table[m1][m2].rights ++;
+              if (table[m1][m2].lastAnswerIsRight === true) {
+                table[m1][m2].rightsInRow ++;
+              } else {
+                table[m1][m2].rightsInRow = 1;
+              }
+              table[m1][m2].wrongsInRow = 0;
+              table[m1][m2].lastAnswerIsRight = true;
+            } else {
+              table[m1][m2].wrongs ++;
+              if (table[m1][m2].lastAnswerIsRight === false) {
+                table[m1][m2].wrongsInRow ++;
+              } else {
+                table[m1][m2].wrongsInRow = 1;
+              }
+              table[m1][m2].rightsInRow = 0;
+              table[m1][m2].lastAnswerIsRight = false;
+            }
+          }
+        }
+      }
+
+      var pythDiv = new PythDiv();
+      pythDiv.init(new PickerDiv());
     </script
+
   </body>
 </html>
