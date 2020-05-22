@@ -32,8 +32,11 @@
         margin-top: 10px;
         width: 250px;
       }
-      #answerStat, #answerStatDiv {
-        width: 250px; 
+      .tab-content {
+        margin-top: 12px;
+      }
+      #answerStatDiv {
+        width: 250px;
         display: block;
       }
       span.right {
@@ -41,6 +44,11 @@
       }
       span.wrong {
         color: red;
+      }
+      .tableLabelLeft {
+        margin-right: 12px;
+        position: relative;
+        top: -2px;
       }
     </style>
   </head>
@@ -57,7 +65,54 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="home">
               <!-- Tab 1 Multiplication -->
-              <h4><span id="answerStat"></span></h4>
+              <blockquote><p class="grey">Задание: дать 2 правильных ответа подряд на каждый пример.</p></blockquote>
+              <div id="answerStat">
+                <table class="table table-bordered table-condensed">
+                  <tr>
+                    <td></td>
+                    <td class="active" align="center"><p>2</p><input id="m_cb_x2" type="checkbox" value="" checked="checked"></td>
+                    <td class="active" align="center"><p>3</p><input id="m_cb_x3" type="checkbox" value="" checked="checked"></td>
+                    <td class="active" align="center"><p>5</p><input id="m_cb_x5" type="checkbox" value="" checked="checked"></td>
+                    <td class="active" align="center"><p>4</p><input id="m_cb_x4" type="checkbox" value="" checked="checked"></td>
+                    <td class="active" align="center"><p>6</p><input id="m_cb_x6" type="checkbox" value="" checked="checked"></td>
+                    <td class="active" align="center"><p>7</p><input id="m_cb_x7" type="checkbox" value="" checked="checked"></td>
+                    <td class="active" align="center"><p>8</p><input id="m_cb_x8" type="checkbox" value="" checked="checked"></td>
+                    <td class="active" align="center"><p>9</p><input id="m_cb_x9" type="checkbox" value="" checked="checked"></td>
+                  </tr>
+                  <tr>
+                    <td class="active" align="center"><span class="tableLabelLeft">2</span><input id="m_cb_2x" type="checkbox" value="" checked="checked"></td>
+                    <td id="m_cell_22"></td><td id="m_cell_23"></td><td id="m_cell_24"></td><td id="m_cell_25"></td><td id="m_cell_26"></td><td id="m_cell_27"></td><td id="m_cell_28"></td><td id="m_cell_29"></td>
+                  </tr>
+                  <tr>
+                    <td class="active" align="center"><span class="tableLabelLeft">3</span><input id="m_cb_3x" type="checkbox" value="" checked="checked"></td>
+                    <td id="m_cell_32"></td><td id="m_cell_33"></td><td id="m_cell_34"></td><td id="m_cell_35"></td><td id="m_cell_36"></td><td id="m_cell_37"></td><td id="m_cell_38"></td><td id="m_cell_39"></td>
+                  </tr>
+                  <tr>
+                    <td class="active" align="center"><span class="tableLabelLeft">4</span><input id="m_cb_4x" type="checkbox" value="" checked="checked"></td>
+                    <td id="m_cell_42"></td><td id="m_cell_43"></td><td id="m_cell_44"></td><td id="m_cell_45"></td><td id="m_cell_46"></td><td id="m_cell_47"></td><td id="m_cell_48"></td><td id="m_cell_49"></td>
+                  </tr>
+                  <tr>
+                    <td class="active" align="center"><span class="tableLabelLeft">5</span><input id="m_cb_5x" type="checkbox" value="" checked="checked"></td>
+                    <td id="m_cell_52"></td><td id="m_cell_53"></td><td id="m_cell_54"></td><td id="m_cell_55"></td><td id="m_cell_56"></td><td id="m_cell_57"></td><td id="m_cell_58"></td><td id="m_cell_59"></td>
+                  </tr>
+                  <tr>
+                    <td class="active" align="center"><span class="tableLabelLeft">6</span><input id="m_cb_6x" type="checkbox" value="" checked="checked"></td>
+                    <td id="m_cell_62"></td><td id="m_cell_63"></td><td id="m_cell_64"></td><td id="m_cell_65"></td><td id="m_cell_66"></td><td id="m_cell_67"></td><td id="m_cell_68"></td><td id="m_cell_69"></td>
+                  </tr>
+                  <tr>
+                    <td class="active" align="center"><span class="tableLabelLeft">7</span><input id="m_cb_7x" type="checkbox" value="" checked="checked"></td>
+                    <td id="m_cell_72"></td><td id="m_cell_73"></td><td id="m_cell_74"></td><td id="m_cell_75"></td><td id="m_cell_76"></td><td id="m_cell_77"></td><td id="m_cell_78"></td><td id="m_cell_79"></td>
+                  </tr>
+                  <tr>
+                    <td class="active" align="center"><span class="tableLabelLeft">8</span><input id="m_cb_8x" type="checkbox" value="" checked="checked"></td>
+                    <td id="m_cell_82"></td><td id="m_cell_83"></td><td id="m_cell_84"></td><td id="m_cell_85"></td><td id="m_cell_86"></td><td id="m_cell_87"></td><td id="m_cell_88"></td><td id="m_cell_89"></td>
+                  </tr>
+                  <tr>
+                    <td class="active" align="center"><span class="tableLabelLeft">9</span><input id="m_cb_9x" type="checkbox" value="" checked="checked"></td>
+                    <td id="m_cell_92"></td><td id="m_cell_93"></td><td id="m_cell_94"></td><td id="m_cell_95"></td><td id="m_cell_96"></td><td id="m_cell_97"></td><td id="m_cell_98"></td><td id="m_cell_99"></td>
+                  </tr>
+                </table>
+              </div>
               <form class="form-inline" id="inputForm">
                 <div class="form-group">
                   <div class="input-group">
@@ -67,6 +122,7 @@
                 </div>
               </form>
               <div class="alert-area"></div>
+              <div class="alert-area2"></div>
             </div>
             <div role="tabpanel" class="tab-pane" id="division">
               <!-- Tab 2 Division -->
@@ -91,6 +147,7 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     
@@ -107,7 +164,11 @@
         };
         var nextTask = function() {
           n = picker.nextNumbers();
-          giveTask(n[0], n[1]);
+          if (n === null) {
+            alertComplete();
+          } else {
+            giveTask(n[0], n[1]);
+          }
         }
         var giveTask = function(m1, m2) {
             $('#task').html(m1+' &times; '+m2+' =');
@@ -142,16 +203,23 @@
               alertCleanTimer = null;
             }
         }
+        var alertComplete = function() {
+          cleanAlerts();
+          $('.alert-area2').append('<div class="alert alert-success"><strong>Вы выполнили задание!</strong></div>');
+          $('#task').html('');
+          $('#answer').prop('disabled', true);
+          runAlertCleanTimer();
+        };
         var alertRight = function(m1,m2,a) {
           cleanAlerts();
           $('.alert-area').append('<div class="alert alert-success"><strong>Верно!</strong> '+m1+'&times;'+m2+'='+a+'</div>');
-          $('#answerStat').append('<span class="right">&bull;<span>');
+          $('#m_cell_'+m1+m2).append('<span class="right">&bull;<span>');
           runAlertCleanTimer();
         };
         var alertWrong = function(m1,m2,a) {
           cleanAlerts();
           $('.alert-area').append('<div class="alert alert-danger"><strong>'+a+' это не верно!</strong> '+m1+'&times;'+m2+'='+(m1*m2)+'</div>');
-          $('#answerStat').append('<span class="wrong">&bull;<span>');
+          $('#m_cell_'+m1+m2).append('<span class="wrong">&bull;<span>');
           runAlertCleanTimer();
         };
         var runAlertCleanTimer = function() {
@@ -196,7 +264,9 @@
             var row = [];
 
             for (i=2; i<=9; i++) {
+              if (! $('#m_cb_'+i+'x').is(':checked')) continue;
               for (j=2; j<=9; j++) {
+                if (! $('#m_cb_x'+j).is(':checked')) continue;
                 if (condition(table[i][j])) {
                   row[n++] = [i,j];
                 }
@@ -204,7 +274,7 @@
             }
 
             if (row.length == 0) {
-              return pickRandom();
+              return null;
             }
 
             return row[Math.floor(Math.random() * n)];
@@ -246,8 +316,26 @@
         }
       }
 
-      var pyth = new Pyth();
-      pyth.init(new Picker());
+      $(document).ready(function () {
+        var checkbox = $('#answerStat').find(':checkbox'), checkboxCookieName = 'checkbox-state';
+
+        checkbox.each(function () {
+          var state = Cookies.get(checkboxCookieName + '|' + $(this).attr('id'))
+          if (state === 'true') {
+            $(this).prop('checked', true);
+          } else if (state === 'false') {
+            $(this).prop('checked', false);
+          }
+        });
+
+        checkbox.click(function () {
+          Cookies.set(checkboxCookieName + '|' + $(this).attr('id'), $(this).prop('checked'));
+        });
+
+        var pyth = new Pyth();
+        pyth.init(new Picker());
+      });
+
     </script>
     <script>
       var PythDiv = function() {
@@ -403,7 +491,6 @@
 
       var pythDiv = new PythDiv();
       pythDiv.init(new PickerDiv());
-    </script
-
+    </script>
   </body>
 </html>
